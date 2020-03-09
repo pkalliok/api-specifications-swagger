@@ -57,6 +57,13 @@ paths:
           application/json:
             schema:
               $ref: "#/components/schemas/Product"
+      responses:
+        '200':
+          description: product was updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Product"
 
 components:
   schemas:
