@@ -10,9 +10,10 @@ info:
 
     Works as a registry of existing products and users' orders and
     tracks which orders have been paid and which have not.
-  version: 0.1
+  version: '0.1'
 
 paths:
+
   /product:
     post:
       summary: create a new product card
@@ -33,8 +34,10 @@ paths:
     parameters:
       - in: path
         name: id
+        schema:
+          type: string
+        description: id or externalProductCode of the product
         required: true
-        type: string
     get:
       summary: fetch product info by id or externalProductCode
       responses:
@@ -64,6 +67,60 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Product"
+  /order:
+    post:
+      summary: create a new order that can be paid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Order"
+      responses:
+        '201':
+          description: |
+            new order created in "pending" state.  The order can be paid
+            by sending the user to its orderCheckoutUrl.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Order"
+  /order/{id}:
+    parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        description: id or externalOrderIdentifier of the order
+        required: true
+    get:
+      summary: fetch order information
+      responses:
+        '200':
+          description: order object
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Order"
+    put:
+      summary: update order
+      description: |
+        Valid changes to an order include: changing its order lines,
+        rejecting or expiring a pending order, and changing its
+        externalOrderIdentifier or postCheckoutReturnUrl.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Order"
+      responses:
+        '200':
+          description: Order was updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Order"
 
 components:
   schemas:
