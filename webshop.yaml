@@ -84,22 +84,28 @@ components:
         imageUrl:
           type: string
           description: URL for image of product
+        bookkeeping:
+          $ref: "#/components/schemas/BookkeepingSpecification"
+
+    BookkeepingSpecification:
+      description: how payments of this product are put into bookkeeping.
+      properties:
         taxPercentage:
           type: integer
           description: amount of VAT to be paid, in per cent points
-        bookkeepingAccountNumber:
+        accountNumber:
           type: integer
           description: tilinumero in which payment is marked in bookkeeping
-        bookkeepingCostCentre:
+        costCentre:
           type: integer
           description: "kustannuspaikka"
-        bookkeepingInternalOrder:
+        internalOrder:
           type: integer
           description: "sisäinen tilaus"
-        bookkeepingProject:
+        project:
           type: integer
           description: "projektinumero"
-        bookkeepingFunctionalArea:
+        functionalArea:
           type: integer
           description: "toimintoalue"
 
@@ -113,6 +119,7 @@ components:
           description: identifier for this order in other systems
         orderLines:
           type: array
+          description: items included in this order
           items:
             type: object
             properties:
@@ -134,6 +141,9 @@ components:
                   price of this order line, including tax, in euro cents.
                   The price is automatically calculated from quantity and
                   product's unitPrice.
+        totalPrice:
+          type: integer
+          description: The total price of this order, including tax, in euro cents.
         status:
           type: string
           description: pending, paid, rejected, expired, ...
