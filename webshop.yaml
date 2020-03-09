@@ -41,7 +41,7 @@ components:
           description: amount of VAT to be paid, in per cent points
         bookkeepingAccountNumber:
           type: integer
-          description: "tilinumero" in which payment is marked in bookkeeping
+          description: tilinumero in which payment is marked in bookkeeping
         bookkeepingCostCentre:
           type: integer
           description: "kustannuspaikka"
