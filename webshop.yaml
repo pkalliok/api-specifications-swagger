@@ -12,9 +12,57 @@ info:
     tracks which orders have been paid and which have not.
   version: 0.1
 
+paths:
+  /product:
+    post:
+      summary: create a new product card
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Product"
+      responses:
+        '201':
+          description: new product successfully created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Product"
+  /product/{id}:
+    parameters:
+      - in: path
+        name: id
+        required: true
+        type: string
+    get:
+      summary: fetch product info by id or externalProductCode
+      responses:
+        '200':
+          description: product object
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Product"
+    delete:
+      summary: remove a product card by id or externalProductCode
+      responses:
+        '204':
+          description: product successfully removed
+    put:
+      summary: update a product card by id or externalProductCode
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Product"
+
 components:
   schemas:
+
     Product:
+      description: Information about a product that can be sold.
       properties:
         id:
           type: string
@@ -54,7 +102,9 @@ components:
         bookkeepingFunctionalArea:
           type: integer
           description: "toimintoalue"
+
     Order:
+      description: Information about a specific user's order of products.
       properties:
         id:
           type: string
